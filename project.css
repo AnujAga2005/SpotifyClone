@@ -1,10 +1,21 @@
+/* --- ANIMATIONS KEYFRAMES --- */
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 body{
     font-family: 'Montserrat', sans-serif;
     margin:0;
     background-color: black;
     color: white;
     overflow: hidden;
-
 }
 .main{
     display: flex;
@@ -14,7 +25,7 @@ body{
 .sidebar{
     background-color: black;
     width:340px;
-    border-radius:1rem;/*16px*/
+    border-radius:1rem;
     margin-right: 0.5rem;
 }
 .main-content{
@@ -43,12 +54,13 @@ a{
     justify-content: center;
     height: 100px;
     padding: 0.5rem 0.7rem;
-
 }
 .nav-option{
     line-height: 2.5rem;
     opacity:0.7;
     padding: 0.5rem 0.75rem;
+    /* ANIMATION */
+    transition: opacity 0.2s ease-in-out;
 }
 .nav-option:hover{
     opacity:1
@@ -83,9 +95,13 @@ a{
 .icons i{
     opacity: 0.7;
     margin: 1rem;
+    /* ANIMATION */
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .icons i:hover{
     opacity:1;
+    /* ANIMATION */
+    transform: scale(1.15);
 }
 .box{
     background-color: #232323;
@@ -111,6 +127,16 @@ a{
     margin-top: 0.5rem;
     height:2rem;
     width: fit-content;
+    cursor: pointer;
+    /* ANIMATION */
+    transition: transform 0.1s ease, background-color 0.2s ease;
+}
+.badge:hover {
+    /* ANIMATION */
+    transform: scale(1.05);
+}
+.badge:active {
+    transform: scale(0.97);
 }
 .dark-badge{
     background-color: #000;
@@ -150,7 +176,28 @@ a{
     padding: 1rem;
     margin-left: 1.5rem;
     margin-top: 1rem;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease; 
+
+    /* ANIMATION: Card loading effect */
+    opacity: 0; /* Start hidden */
+    animation: cardEnter 0.5s forwards; /* Apply animation */
 }
+.card:hover {
+    transform: scale(1.05);
+    background-color: #2a2a2a;
+    cursor: pointer;
+}
+
+/* ANIMATION: Staggered delay for each card */
+.cards-container .card:nth-child(1) { animation-delay: 0.1s; }
+.cards-container .card:nth-child(2) { animation-delay: 0.2s; }
+.cards-container .card:nth-child(3) { animation-delay: 0.3s; }
+.cards-container .card:nth-child(4) { animation-delay: 0.4s; }
+.cards-container .card:nth-child(5) { animation-delay: 0.5s; }
+.cards-container .card:nth-child(6) { animation-delay: 0.6s; }
+.cards-container .card:nth-child(7) { animation-delay: 0.7s; }
+
+
 .cards-container{
     display: flex;
     flex-wrap: wrap;
@@ -196,17 +243,22 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 .player-controls-icon{
     height: 1rem;
     margin-right: 1.75rem;
     opacity: 0.7;
-
+    /* ANIMATION */
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .player-controls-icon:hover{
     opacity: 1;
-  
+    /* ANIMATION */
+    transform: scale(1.1);
+}
+.player-controls-icon:active{
+    /* ANIMATION */
+    transform: scale(0.95);
 }
 .playback-bar{
     display: flex;
@@ -278,7 +330,6 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 .c1{
     height: 3.25rem;
@@ -291,7 +342,6 @@ a{
     opacity: 0.5;
     margin-top: -0.25rem ;
     margin-left: 0.35rem;
-    
 }
 .pro{
     width: 70px;
@@ -306,4 +356,107 @@ a{
 }
 .pro::-webkit-slider-thumb{
     appearance: none;
+}
+
+
+/* --- MODAL CSS from previous step --- */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.modal-container {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    place-items: center;
+}
+.modal-container.active {
+    display: grid;
+}
+.modal-content {
+    background-color: #282828;
+    color: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+}
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.close-btn:hover {
+    color: #fff;
+}
+.modal-content h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #444;
+    padding-bottom: 0.5rem;
+}
+.modal-content p {
+    line-height: 1.6;
+}
+.modal-content input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 1rem 0;
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 0.5rem;
+    color: #fff;
+    font-size: 1rem;
+}
+.modal-content button {
+    background-color: #1DB954;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.modal-content button:hover {
+    background-color: #1ED760;
+    transform: scale(1.05);
+}
+.modal-content ul {
+    list-style-type: '✓  ';
+    padding-left: 1.5rem;
+}
+.modal-content li {
+    margin-bottom: 0.75rem;
+}
+.app-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+.app-buttons button {
+    background-color: #333;
+    flex-grow: 1;
+}
+.app-buttons button:hover {
+    background-color: #444;
 }
